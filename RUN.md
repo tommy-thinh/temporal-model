@@ -64,8 +64,28 @@ Leave `MODEL_PATH = None` to download the pretrained release specified in
 `.cache/models/` and reuses that file on subsequent runs. If you already have
 a complete `model.zip`, set `MODEL_PATH` to its path instead.
 
-This uses the YOLO bundled with that archive. Your own YOLO `.pt` file alone
-cannot replace `model.zip`, which also contains the temporal classifier.
+By default this uses the YOLO bundled with that archive. To use your own
+fire/smoke segmentation model, set these additional settings in the script:
+
+```python
+YOLO_MODEL_PATH = Path("/absolute/path/to/your/best.pt")
+SMOKE_CLASS_ID = 81
+```
+
+Keep `MODEL_PATH` pointing to the complete temporal package (or `None` to use
+the downloaded release). Your YOLO `.pt` and the temporal `model.zip` have
+different roles; the script loads your detector and the package's classifier.
+
+It runs your segmenter, extracts normalized boxes from `result.boxes.xywhn`,
+and sends only class 81 (smoke) to the temporal classifier. Class 80 (fire) is
+excluded. Frames with no smoke boxes get empty detection lists, preserving
+the sequence's gaps. The bundled YOLO is neither loaded nor run in this mode.
+No `.txt` label files or manual box conversion are needed for inference.
+
+The script prints smoke-box counts per frame and the number of candidate
+tubes to help diagnose `Kept tubes: 0`. It uses boxes, not segmentation masks.
+The pretrained calibrator was fitted with the original detector; its reported
+probabilities and threshold need evaluation with your detector and data.
 
 ## 4. Run
 
