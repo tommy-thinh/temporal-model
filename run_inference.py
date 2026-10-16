@@ -13,13 +13,16 @@ from temporal_model.core.protocol import Frame
 from temporal_model.core.types import Detection, FrameDetections
 
 # Settings: paths can be absolute or relative to the repository root.
-IMAGE_DIR = Path("/absolute/path/to/my_sequence")
+IMAGE_DIR = Path("frames/23-09-2026-14-25-31_frames")
+
 MODEL_PATH = None  # None downloads the pinned release; or Path("my/model.zip").
-YOLO_MODEL_PATH = None  # Set Path("/path/to/your/best.pt") to use your segmenter.
+YOLO_MODEL_PATH = Path("my-models/oversample.pt")  # Set Path("/path/to/your/best.pt") to use your segmenter.
 SMOKE_CLASS_ID = 81  # Class 80 (fire) is excluded from this smoke classifier.
+
 YOLO_CONFIDENCE = 0.1
 YOLO_IOU = 0.2
-YOLO_IMAGE_SIZE = 1024
+YOLO_IMAGE_SIZE = 640
+
 DEVICE = None  # Automatically choose CUDA/MPS/CPU; or set "cpu" / "cuda".
 OUTPUT_PATH = Path(".cache/run/sequence-output.json")
 

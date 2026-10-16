@@ -31,3 +31,6 @@ api/models/
 
 # direnv credentials (per-package .envrc.example documents the variables)
 .envrc
+
+frames/
+my-models/
